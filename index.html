@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101820" />
+  <meta name="description" content="주방 월간 작업 일지" />
+  <title>주방 작업 일지</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f6b73c'/%3E%3Cpath d='M19 17h26v30H19z' fill='%23101820'/%3E%3Cpath d='M25 24h14M25 32h14M25 40h9' stroke='%23f6b73c' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">KITCHEN LOGBOOK</p>
+        <h1>주방 작업 일지</h1>
+      </div>
+      <div class="top-actions"><a class="qr-link" href="qr.html">QR 접속</a><div class="live-chip"><span></span> 로컬 저장</div></div>
+    </header>
+
+    <section id="monthly-view" class="view active" aria-labelledby="monthly-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="monthly-title">월간 작업</h2>
+        </div>
+        <button class="today-btn" id="today-btn" type="button">오늘</button>
+      </div>
+
+      <div class="month-switcher" aria-label="월 이동">
+        <button class="round-btn" id="prev-month" type="button" aria-label="이전 달">‹</button>
+        <strong id="month-label"></strong>
+        <button class="round-btn" id="next-month" type="button" aria-label="다음 달">›</button>
+      </div>
+
+      <div class="calendar-card">
+        <div class="weekday-row" aria-hidden="true">
+          <span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sat">토</span>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+
+      <div class="selected-date-row">
+        <div>
+          <p class="eyebrow">SELECTED DATE</p>
+          <h3 id="selected-date-label"></h3>
+        </div>
+        <span class="entry-count" id="entry-count"></span>
+      </div>
+
+      <div class="icon-grid" id="monthly-icon-grid" aria-label="작업 아이콘"></div>
+      <p class="helper-text">저장·수정·삭제한 내용은 로컬과 휴대폰 전체 기록에 반영됩니다.</p>
+      <div class="record-actions" aria-label="기록 관리">
+        <button class="action-btn primary" id="save-record" type="button">저장</button>
+        <button class="action-btn" id="edit-record" type="button">수정</button>
+        <button class="action-btn danger" id="delete-record" type="button">삭제</button>
+      </div>
+    </section>
+
+    <section id="codes-view" class="view" aria-labelledby="codes-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="codes-title">작업 코드</h2>
+        </div>
+        <span class="count-pill">12개 코드</span>
+      </div>
+      <p class="page-intro">수정을 누른 뒤 설명을 바꾸고 저장하세요. 저장하면 전체 기록에 반영됩니다.</p>
+      <div class="code-list" id="code-list"></div>
+      <div class="record-actions code-actions" aria-label="작업 코드 관리">
+        <button class="action-btn" id="edit-codes" type="button">수정</button>
+        <button class="action-btn primary" id="save-codes" type="button">저장</button>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="주요 메뉴">
+    <button class="nav-item active" data-view="monthly-view" type="button">
+      <span class="nav-icon">▦</span><span>월간</span>
+    </button>
+    <button class="nav-item" data-view="codes-view" type="button">
+      <span class="nav-icon">⌘</span><span>작업 코드</span>
+    </button>
+  </nav>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

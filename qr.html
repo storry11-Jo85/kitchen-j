@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#101820" />
+  <title>주방 작업 일지 · QR 접속</title>
+  <style>
+    :root{--ink:#101820;--paper:#f4f0e8;--yellow:#f6b73c;--muted:#778088}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:var(--paper);color:var(--ink);font-family:Arial,'Noto Sans KR',sans-serif}.card{width:min(100%,390px);padding:28px 24px 30px;text-align:center;background:#fffdf8;border:1px solid #e6e0d5;border-radius:24px;box-shadow:0 16px 34px #10182014}.eyebrow{margin:0 0 10px;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.12em}.card h1{margin:0 0 8px;font-size:27px;letter-spacing:-.08em}.hint{margin:0 0 22px;color:var(--muted);font-size:14px;line-height:1.6}.qr{display:block;width:min(100%,290px);margin:0 auto 20px;padding:15px;border:1px solid #e6e0d5;border-radius:18px;background:#fff}.url{display:inline-block;padding:10px 14px;border-radius:999px;background:#fff0c7;font-size:14px;font-weight:700;word-break:break-all}.back{display:block;margin-top:22px;color:var(--ink);font-size:14px;font-weight:700;text-decoration:none}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <p class="eyebrow">KITCHEN LOGBOOK</p>
+    <h1>휴대폰으로 바로 접속</h1>
+    <p class="hint">같은 와이파이에 연결된 휴대폰 카메라로 QR코드를 스캔하세요.</p>
+    <div class="qr" id="qrcode" aria-label="주방 작업 일지 접속 QR코드"></div>
+    <div class="url">http://192.168.45.80:4173</div>
+    <a class="back" href="index.html">← 작업 일지로 돌아가기</a>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script>new QRCode(document.getElementById('qrcode'), { text:'http://192.168.45.80:4173', width:260, height:260, colorDark:'#101820', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.M });</script>
+</body>
+</html>
