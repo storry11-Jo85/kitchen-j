@@ -54,6 +54,8 @@ function renderAll() { renderCalendar(); renderIcons(); renderCodes(); }
 function showToast(message) { const t=$('toast'); t.textContent=message; t.classList.add('show'); clearTimeout(window.toastTimer); window.toastTimer=setTimeout(()=>t.classList.remove('show'),1600); }
 function updateConnectionChip() { const chip=document.querySelector('.live-chip'); if (!chip) return; chip.innerHTML = `<span></span> ${serverConnected ? '공유 저장' : '기기 저장'}`; chip.style.background = serverConnected ? 'var(--mint)' : '#ffe4bf'; }
 async function loadSharedState() { try { const response=await fetch('/api/state'); if (!response.ok) throw Error(); const remote=await response.json(); state={...remote, drafts:{}}; localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); serverConnected=true; updateConnectionChip(); renderAll(); } catch { updateConnectionChip(); } }
+function enterApp() { document.body.classList.add('authenticated'); $('login-screen').hidden=true; renderAll(); loadSharedState(); }
+async function login(event) { event.preventDefault(); const input=$('login-password'); const error=$('login-error'); error.textContent=''; try { const response=await fetch('/api/login', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:input.value})}); if (!response.ok) throw Error(); input.value=''; enterApp(); } catch { error.textContent='비밀번호가 맞지 않습니다.'; input.select(); } }
 document.querySelectorAll('.nav-item').forEach(btn=>btn.addEventListener('click',()=>{ document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x===btn)); document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===btn.dataset.view)); window.scrollTo({top:0,behavior:'smooth'}); }));
 $('prev-month').addEventListener('click',()=>{ cursor.setMonth(cursor.getMonth()-1); renderCalendar(); });
 $('next-month').addEventListener('click',()=>{ cursor.setMonth(cursor.getMonth()+1); renderCalendar(); });
@@ -63,6 +65,6 @@ $('edit-record').addEventListener('click', editRecord);
 $('delete-record').addEventListener('click', deleteRecord);
 $('edit-codes').addEventListener('click',()=>{ codeEditing=true; renderCodes(); $('code-list').querySelector('textarea')?.focus(); showToast('작업 코드 수정 모드'); });
 $('save-codes').addEventListener('click',()=>{ save(); codeEditing=false; renderCodes(); showToast('작업 코드를 저장했어요'); });
-renderAll();
-loadSharedState();
-setInterval(async()=>{ if (document.visibilityState !== 'visible') return; try { const response=await fetch('/api/state'); if (!response.ok) return; const remote=await response.json(); if (JSON.stringify(remote)!==JSON.stringify({...state, drafts:undefined})) { state={...remote, drafts:{}}; localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); serverConnected=true; updateConnectionChip(); renderAll(); } } catch {} }, 3000);
+$('login-form').addEventListener('submit', login);
+fetch('/api/session').then(response=>{ if (response.ok) enterApp(); }).catch(()=>{});
+setInterval(async()=>{ if (!document.body.classList.contains('authenticated') || document.visibilityState !== 'visible') return; try { const response=await fetch('/api/state'); if (!response.ok) return; const remote=await response.json(); if (JSON.stringify(remote)!==JSON.stringify({...state, drafts:undefined})) { state={...remote, drafts:{}}; localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); serverConnected=true; updateConnectionChip(); renderAll(); } } catch {} }, 3000);
