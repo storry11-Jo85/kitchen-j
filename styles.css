@@ -7,6 +7,7 @@ body:not(.authenticated) .app-shell, body:not(.authenticated) .bottom-nav { disp
 button, textarea { font:inherit; }
 button { border:0; cursor:pointer; }
 .login-screen { min-height:100svh; display:grid; place-items:center; padding:24px; }
+.login-screen[hidden] { display:none; }
 .login-card { width:min(100%,390px); padding:30px 24px; background:var(--card); border:1px solid var(--line); border-radius:22px; box-shadow:var(--shadow); }
 .login-card h1 { margin:8px 0 10px; }
 .login-card > p:not(.eyebrow) { color:var(--muted); font-size:.9rem; line-height:1.6; margin-bottom:24px; }
